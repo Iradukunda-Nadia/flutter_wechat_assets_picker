@@ -1694,7 +1694,7 @@ class DefaultAssetPickerBuilderDelegate
               provider.selectedAssets.clear();
             }
             provider.selectAsset(asset);
-            if (isSingleAssetMode && isPreviewEnabled) {
+            if (isSingleAssetMode && !isPreviewEnabled) {
               Navigator.of(context).maybePop(provider.selectedAssets);
             }
           },
@@ -1710,13 +1710,6 @@ class DefaultAssetPickerBuilderDelegate
                 : innerSelector,
           ),
         );
-        if (isPreviewEnabled) {
-          return PositionedDirectional(
-            top: 0,
-            end: 0,
-            child: selectorWidget,
-          );
-        }
         return selectorWidget;
       },
     );
