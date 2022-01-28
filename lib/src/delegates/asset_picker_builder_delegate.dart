@@ -1694,7 +1694,7 @@ class DefaultAssetPickerBuilderDelegate
               provider.selectedAssets.clear();
             }
             provider.selectAsset(asset);
-            if (isSingleAssetMode && !isPreviewEnabled) {
+            if (isSingleAssetMode && isPreviewEnabled) {
               Navigator.of(context).maybePop(provider.selectedAssets);
             }
           },
@@ -1705,7 +1705,7 @@ class DefaultAssetPickerBuilderDelegate
             width: null,
             height: null,
             alignment: AlignmentDirectional.topEnd,
-            child: (!isPreviewEnabled && isSingleAssetMode && !selected)
+            child: (isSingleAssetMode && !selected)
                 ? const SizedBox.shrink()
                 : innerSelector,
           ),
