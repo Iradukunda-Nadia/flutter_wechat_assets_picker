@@ -85,7 +85,8 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
             Constants.defaultGridThumbSize,
           ),
         );
-      } else if (imageFileType == ImageFileType.heic) {
+      }
+      else if (imageFileType == ImageFileType.heic) {
         data = await (await key.entity.file)?.readAsBytes();
       } else {
         data = await key.entity.originBytes;

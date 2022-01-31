@@ -55,7 +55,7 @@ class AssetWidgetBuilder extends StatelessWidget {
 
   Widget _imageAssetWidget(BuildContext context) {
     return Image(
-      image: AssetEntityImageProvider(entity, isOriginal: false),
+      image: AssetEntityImageProvider(entity, isOriginal: false, ),
       fit: BoxFit.cover,
     );
   }

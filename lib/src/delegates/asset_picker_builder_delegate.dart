@@ -1592,7 +1592,7 @@ class DefaultAssetPickerBuilderDelegate
               context,
               currentIndex: 0,
               previewAssets: _selected,
-              previewThumbSize: previewThumbSize,
+              previewThumbSize: <int>[500, 500],
               selectedAssets: _selected,
               selectorProvider: provider as DefaultAssetPickerProvider,
               themeData: theme,
