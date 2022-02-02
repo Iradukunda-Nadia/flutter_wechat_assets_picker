@@ -216,9 +216,6 @@ abstract class AssetPickerViewerBuilderDelegate<Asset, Path> {
   }
 
   void selectAsset(Asset entity) {
-    if (maxAssets != null && selectedCount >= maxAssets!) {
-      return;
-    }
     provider?.selectAssetEntity(entity);
     if (!isSelectedPreviewing) {
       selectedAssets?.add(entity);
@@ -694,12 +691,6 @@ class DefaultAssetPickerViewerBuilderDelegate
               () {
                 if (isWeChatMoment && hasVideo) {
                   return Constants.textDelegate.confirm;
-                }
-                if (provider!.isSelectedNotEmpty) {
-                  return '${Constants.textDelegate.confirm}'
-                      ' (${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
                 }
                 return Constants.textDelegate.confirm;
               }(),

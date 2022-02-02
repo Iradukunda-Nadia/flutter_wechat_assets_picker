@@ -192,8 +192,6 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   /// 选中资源是否为空
   bool get isSelectedNotEmpty => selectedAssets.isNotEmpty;
 
-  /// 是否已经选择了最大数量的资源
-  bool get selectedMaximumAssets => selectedAssets.length == maxAssets;
 
   /// Get assets path entities.
   /// 获取所有的资源路径
@@ -214,7 +212,7 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   /// Select asset.
   /// 选中资源
   void selectAsset(Asset item) {
-    if (selectedAssets.length == maxAssets || selectedAssets.contains(item)) {
+    if (selectedAssets.contains(item)) {
       return;
     }
     final List<Asset> _set = List<Asset>.from(selectedAssets);

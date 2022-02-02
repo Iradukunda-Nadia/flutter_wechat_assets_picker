@@ -307,7 +307,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   /// 资源是否已选的指示器
   Widget selectIndicator(BuildContext context, Asset asset);
 
-  /// Indicator when the asset cannot be selected.
+  /*/// Indicator when the asset cannot be selected.
   /// 当资源无法被选中时的遮罩
   Widget itemBannedIndicator(BuildContext context, Asset asset) {
     return Consumer<AssetPickerProvider<Asset, Path>>(
@@ -321,7 +321,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       },
     );
   }
-
+*/
   /// Loading indicator.
   /// 加载指示器
   Widget loadingIndicator(BuildContext context) {
@@ -1069,7 +1069,7 @@ class DefaultAssetPickerBuilderDelegate
         selectedBackdrop(context, currentIndex, asset),
         if (!isWeChatMoment || asset.type != AssetType.video)
           selectIndicator(context, asset),
-        itemBannedIndicator(context, asset),
+        //itemBannedIndicator(context, asset),
       ],
     );
   }
@@ -1191,10 +1191,11 @@ class DefaultAssetPickerBuilderDelegate
             borderRadius: BorderRadius.circular(3),
           ),
           child: ScaleText(
-            provider.isSelectedNotEmpty && !isSingleAssetMode
+            /*provider.isSelectedNotEmpty && !isSingleAssetMode
                 ? '${Constants.textDelegate.confirm}'
                 ' (${provider.selectedAssets.length}/${provider.maxAssets})'
-                : Constants.textDelegate.confirm,
+                : */
+            Constants.textDelegate.confirm,
             style: TextStyle(
               color: provider.isSelectedNotEmpty
                   ? theme.textTheme.bodyText1?.color
@@ -1628,7 +1629,7 @@ class DefaultAssetPickerBuilderDelegate
   }
 
   @override
-  Widget itemBannedIndicator(BuildContext context, AssetEntity asset) {
+  /*Widget itemBannedIndicator(BuildContext context, AssetEntity asset) {
     return Consumer<DefaultAssetPickerProvider>(
       builder: (_, DefaultAssetPickerProvider p, __) {
         if ((!p.selectedAssets.contains(asset) && p.selectedMaximumAssets) ||
@@ -1642,7 +1643,7 @@ class DefaultAssetPickerBuilderDelegate
         return const SizedBox.shrink();
       },
     );
-  }
+  }*/
 
   @override
   Widget selectIndicator(BuildContext context, AssetEntity asset) {
@@ -1717,9 +1718,9 @@ class DefaultAssetPickerBuilderDelegate
 
   @override
   Widget selectedBackdrop(BuildContext context, int index, AssetEntity asset) {
-    bool selectedAllAndNotSelected() =>
+    /*bool selectedAllAndNotSelected() =>
         !provider.selectedAssets.contains(asset) &&
-            provider.selectedMaximumAssets;
+            provider.selectedMaximumAssets;*/
     bool selectedPhotosAndIsVideo() =>
         isWeChatMoment &&
             asset.type == AssetType.video &&
@@ -1733,9 +1734,9 @@ class DefaultAssetPickerBuilderDelegate
           // When the special type is WeChat Moment, pictures and videos cannot
           // be selected at the same time. Video select should be banned if any
           // pictures are selected.
-          if (selectedAllAndNotSelected() || selectedPhotosAndIsVideo()) {
+          /*if (selectedAllAndNotSelected() || selectedPhotosAndIsVideo()) {
             return;
-          }
+          }*/
           final List<AssetEntity> _current;
           final List<AssetEntity>? _selected;
           final int _index;
