@@ -192,6 +192,9 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   /// 选中资源是否为空
   bool get isSelectedNotEmpty => selectedAssets.isNotEmpty;
 
+  /// 是否已经选择了最大数量的资源
+  bool get selectedMaximumAssets => selectedAssets.length == maxAssets;
+
 
   /// Get assets path entities.
   /// 获取所有的资源路径
@@ -242,7 +245,7 @@ class DefaultAssetPickerProvider
     this.requestType = RequestType.image,
     this.sortPathDelegate = SortPathDelegate.common,
     this.filterOptions,
-    int maxAssets = 9,
+    int maxAssets = 50,
     int pageSize = 80,
     int pathThumbSize = 80,
     Duration routeDuration = const Duration(milliseconds: 300),
