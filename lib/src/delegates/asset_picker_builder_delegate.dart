@@ -1069,7 +1069,7 @@ class DefaultAssetPickerBuilderDelegate
         selectedBackdrop(context, currentIndex, asset),
         if (!isWeChatMoment || asset.type != AssetType.video)
           selectIndicator(context, asset),
-        //itemBannedIndicator(context, asset),
+        itemBannedIndicator(context, asset),
       ],
     );
   }
