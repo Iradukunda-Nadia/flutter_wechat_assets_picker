@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:wechat_assets_picker/src/provider/asset_entity_image_provider.dart';
+import 'package:wechat_assets_picker/src/widget/dialogs.dart';
 
 import '../constants/constants.dart';
 import '../widget/builder/asset_entity_grid_item_builder.dart';
@@ -732,6 +733,7 @@ class DefaultAssetPickerBuilderDelegate
   /// Whether the preview of assets is enabled.
   /// 资源的预览是否启用
   bool get isPreviewEnabled => specialPickerType != SpecialPickerType.noPreview;
+ final GlobalKey<State<StatefulWidget>> showLoadingDialogKey = GlobalKey();
 
   @override
   Widget androidLayout(BuildContext context) {
@@ -1204,9 +1206,37 @@ class DefaultAssetPickerBuilderDelegate
               fontWeight: FontWeight.normal,
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
+            PMProgressHandler? _progressHandler;
+            _progressHandler = PMProgressHandler();
+            int toLoad =0;
             if (provider.isSelectedNotEmpty) {
-              Navigator.of(context).maybePop(provider.selectedAssets);
+              Future.wait(provider.selectedAssets.map((e)  async {
+                print('testy');
+                bool result = await e.isLocallyAvailable;
+                print(result);
+                if(result != true) {
+
+                  print('loading');
+                  toLoad++;
+                  if (showLoadingDialogKey.currentContext == null){
+                    print('another one');
+                    Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
+                  }
+                  await e.loadFile(
+                    progressHandler: _progressHandler,
+                    isOrigin: false,
+                  );
+                }
+              })).then( (value){
+                print('show value: $value');
+                print('toLoad: $toLoad');
+                if (showLoadingDialogKey.currentContext != null){
+                  Navigator.of(showLoadingDialogKey.currentContext!).pop();
+                }
+                Navigator.of(context).maybePop(provider.selectedAssets);
+              });
+
             }
           },
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
