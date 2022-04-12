@@ -1211,7 +1211,7 @@ class DefaultAssetPickerBuilderDelegate
             _progressHandler = PMProgressHandler();
             int toLoad =0;
             if (provider.isSelectedNotEmpty) {
-              Future.wait(provider.selectedAssets.map((e)  async {
+              Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
                 print('testy');
                 final bool result = await e.isLocallyAvailable;
                 print(result);
