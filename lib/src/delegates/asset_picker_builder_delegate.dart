@@ -733,7 +733,7 @@ class DefaultAssetPickerBuilderDelegate
   /// Whether the preview of assets is enabled.
   /// 资源的预览是否启用
   bool get isPreviewEnabled => specialPickerType != SpecialPickerType.noPreview;
- GlobalKey<State<StatefulWidget>> showLoadingDialogKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> showLoadingDialogKey = GlobalKey();
 
   @override
   Widget androidLayout(BuildContext context) {
@@ -1213,7 +1213,7 @@ class DefaultAssetPickerBuilderDelegate
             if (provider.isSelectedNotEmpty) {
               Future.wait(provider.selectedAssets.map((e)  async {
                 print('testy');
-                bool result = await e.isLocallyAvailable;
+                final bool result = await e.isLocallyAvailable;
                 print(result);
                 if(result != true) {
 
