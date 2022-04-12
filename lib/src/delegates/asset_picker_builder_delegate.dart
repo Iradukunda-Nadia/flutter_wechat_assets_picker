@@ -1209,26 +1209,10 @@ class DefaultAssetPickerBuilderDelegate
           onPressed: () async {
             PMProgressHandler? _progressHandler;
             _progressHandler = PMProgressHandler();
-            int toLoad =0;
+            const int toLoad = 0;
             if (provider.isSelectedNotEmpty) {
-              Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
-                print('testy');
-                final bool result = await e.isLocallyAvailable;
-                print(result);
-                if(result != true) {
-
-                  print('loading');
-                  toLoad++;
-                  if (showLoadingDialogKey.currentContext == null){
-                    print('another one');
-                    Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
-                  }
-                  await e.loadFile(
-                    progressHandler: _progressHandler,
-                    isOrigin: false,
-                  );
-                }
-              })).then( (value){
+              final Future<bool> successfulMessage = checkIcloudStatus(context);
+              successfulMessage.then((bool value){
                 print('show value: $value');
                 print('toLoad: $toLoad');
                 if (showLoadingDialogKey.currentContext != null){
@@ -1243,6 +1227,38 @@ class DefaultAssetPickerBuilderDelegate
         );
       },
     );
+  }
+
+  Future<bool> checkIcloudStatus(BuildContext context) async {
+    PMProgressHandler? _progressHandler;
+    _progressHandler = PMProgressHandler();
+    int toLoad =0;
+    Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
+      print('testy');
+      final bool result = await e.isLocallyAvailable;
+      print(result);
+      if(result != true) {
+
+        print('loading');
+        toLoad++;
+        if (showLoadingDialogKey.currentContext == null){
+          print('another one');
+          Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
+        }
+        await e.loadFile(
+          progressHandler: _progressHandler,
+          isOrigin: false,
+        );
+      }
+    })).then((value){
+      print('show value: $value');
+      print('toLoad: $toLoad');
+      if (showLoadingDialogKey.currentContext != null){
+        Navigator.of(showLoadingDialogKey.currentContext!).pop();
+      }
+      Navigator.of(context).maybePop(provider.selectedAssets);
+    });
+    return true;
   }
 
   @override
