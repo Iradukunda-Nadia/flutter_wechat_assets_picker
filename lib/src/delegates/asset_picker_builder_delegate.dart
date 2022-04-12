@@ -1216,10 +1216,9 @@ class DefaultAssetPickerBuilderDelegate
                 bool result = await e.isLocallyAvailable;
                 print(result);
                 if(result != true) {
-
                   print('loading');
                   toLoad++;
-                  if (showLoadingDialogKey.currentState == null){
+                  if (showLoadingDialogKey.currentState == null || showLoadingDialogKey.currentContext == null){
                     print('another one');
                     Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
                   }
@@ -1228,10 +1227,10 @@ class DefaultAssetPickerBuilderDelegate
                     isOrigin: false,
                   );
                 }
-              })).then( (value){
+              })).then((value){
                 print('show value: $value');
                 print('toLoad: $toLoad');
-                if (showLoadingDialogKey.currentContext != null){
+                if (showLoadingDialogKey.currentContext != null || showLoadingDialogKey.currentState != null){
                   Navigator.of(showLoadingDialogKey.currentContext!).pop();
                 }
                 Navigator.of(context).maybePop(provider.selectedAssets);
