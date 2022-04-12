@@ -733,7 +733,7 @@ class DefaultAssetPickerBuilderDelegate
   /// Whether the preview of assets is enabled.
   /// 资源的预览是否启用
   bool get isPreviewEnabled => specialPickerType != SpecialPickerType.noPreview;
- final GlobalKey<State<StatefulWidget>> showLoadingDialogKey = GlobalKey();
+ GlobalKey<State<StatefulWidget>> showLoadingDialogKey = GlobalKey();
 
   @override
   Widget androidLayout(BuildContext context) {
@@ -1216,9 +1216,10 @@ class DefaultAssetPickerBuilderDelegate
                 bool result = await e.isLocallyAvailable;
                 print(result);
                 if(result != true) {
+
                   print('loading');
                   toLoad++;
-                  if (showLoadingDialogKey.currentState == null || showLoadingDialogKey.currentContext == null){
+                  if (showLoadingDialogKey.currentContext == null){
                     print('another one');
                     Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
                   }
@@ -1227,10 +1228,10 @@ class DefaultAssetPickerBuilderDelegate
                     isOrigin: false,
                   );
                 }
-              })).then((value){
+              })).then( (value){
                 print('show value: $value');
                 print('toLoad: $toLoad');
-                if (showLoadingDialogKey.currentContext != null || showLoadingDialogKey.currentState != null){
+                if (showLoadingDialogKey.currentContext != null){
                   Navigator.of(showLoadingDialogKey.currentContext!).pop();
                 }
                 Navigator.of(context).maybePop(provider.selectedAssets);
