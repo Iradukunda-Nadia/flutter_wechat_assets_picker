@@ -1233,7 +1233,7 @@ class DefaultAssetPickerBuilderDelegate
     PMProgressHandler? _progressHandler;
     _progressHandler = PMProgressHandler();
     int toLoad =0;
-    Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
+    return Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
       print('testy');
       final bool result = await e.isLocallyAvailable;
       print(result);
@@ -1257,8 +1257,9 @@ class DefaultAssetPickerBuilderDelegate
         Navigator.of(showLoadingDialogKey.currentContext!).pop();
       }
       Navigator.of(context).maybePop(provider.selectedAssets);
+    }).then((value) {
+      return true;
     });
-    return true;
   }
 
   @override
