@@ -1233,9 +1233,9 @@ class DefaultAssetPickerBuilderDelegate
     PMProgressHandler? _progressHandler;
     _progressHandler = PMProgressHandler();
     int toLoad =0;
-    return Future.wait(provider.selectedAssets.map((AssetEntity e)  async {
+    for( int e = 0; e< provider.selectedAssets.length; e++) {
       print('testy');
-      final bool result = await e.isLocallyAvailable;
+      final bool result = await provider.selectedAssets[e].isLocallyAvailable;
       print(result);
       if(result != true) {
 
@@ -1245,12 +1245,13 @@ class DefaultAssetPickerBuilderDelegate
           print('another one');
           Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
         }
-        await e.loadFile(
+        await provider.selectedAssets[e].loadFile(
           progressHandler: _progressHandler,
           isOrigin: false,
         );
       }
-    }));
+    }
+    return true;
   }
 
   @override
