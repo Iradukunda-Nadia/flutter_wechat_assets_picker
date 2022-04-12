@@ -1211,8 +1211,8 @@ class DefaultAssetPickerBuilderDelegate
             _progressHandler = PMProgressHandler();
             const int toLoad = 0;
             if (provider.isSelectedNotEmpty) {
-              final Future<bool> successfulMessage = checkIcloudStatus(context);
-              successfulMessage.then((bool value){
+              final Future<dynamic> successfulMessage = checkIcloudStatus(context);
+              successfulMessage.then((dynamic value){
                 print('show value: $value');
                 print('toLoad: $toLoad');
                 if (showLoadingDialogKey.currentContext != null){
@@ -1229,7 +1229,7 @@ class DefaultAssetPickerBuilderDelegate
     );
   }
 
-  Future<bool> checkIcloudStatus(BuildContext context) async {
+  Future<dynamic> checkIcloudStatus(BuildContext context) async {
     PMProgressHandler? _progressHandler;
     _progressHandler = PMProgressHandler();
     int toLoad =0;
@@ -1250,16 +1250,7 @@ class DefaultAssetPickerBuilderDelegate
           isOrigin: false,
         );
       }
-    })).then((value){
-      print('show value: $value');
-      print('toLoad: $toLoad');
-      if (showLoadingDialogKey.currentContext != null){
-        Navigator.of(showLoadingDialogKey.currentContext!).pop();
-      }
-      Navigator.of(context).maybePop(provider.selectedAssets);
-    }).then((value) {
-      return true;
-    });
+    }));
   }
 
   @override
