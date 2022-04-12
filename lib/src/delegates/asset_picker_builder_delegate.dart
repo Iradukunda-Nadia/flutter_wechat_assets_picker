@@ -1219,7 +1219,7 @@ class DefaultAssetPickerBuilderDelegate
 
                   print('loading');
                   toLoad++;
-                  if (showLoadingDialogKey.currentContext == null){
+                  if (showLoadingDialogKey.currentState == null){
                     print('another one');
                     Dialogs().showLoadingDialog(context, showLoadingDialogKey, _progressHandler);
                   }
